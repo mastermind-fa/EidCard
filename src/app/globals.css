@@ -5,6 +5,8 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-inter);
   --font-serif: var(--font-playfair);
+  --font-hind: var(--font-hind);
+  --font-noto-bn: var(--font-noto-bn);
 }
 
 :root {

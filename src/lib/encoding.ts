@@ -2,18 +2,6 @@ import LZString from "lz-string";
 import type { CardData, CardPayload } from "./types";
 import { cardDataSchema } from "./validation";
 
-/**
- * URL-encoded card architecture:
- *
- * Card data is compressed with LZ-String and encoded into the URL query param.
- * This avoids any database call for the vast majority of cards (~95%+).
- *
- * For a typical card (~400 bytes JSON), the compressed payload is ~200-400 chars,
- * well within the 2048-char safe URL limit.
- *
- * If the encoded payload exceeds MAX_URL_PAYLOAD_LENGTH, the caller should
- * fall back to storing the card in the database and using a short ID URL instead.
- */
 const MAX_URL_PAYLOAD_LENGTH = 1800;
 
 export function encodeCardData(data: CardData): {
@@ -34,7 +22,16 @@ export function decodeCardData(encoded: string): CardData | null {
     const json = LZString.decompressFromEncodedURIComponent(encoded);
     if (!json) return null;
     const parsed = JSON.parse(json);
-    const result = cardDataSchema.safeParse(parsed);
+
+    // Backward-compatible defaults for older URLs without theme/lang
+    const withDefaults = {
+      theme: "emerald",
+      lang: "bn",
+      font: "inter",
+      ...parsed,
+    };
+
+    const result = cardDataSchema.safeParse(withDefaults);
     if (!result.success) return null;
     return result.data;
   } catch {

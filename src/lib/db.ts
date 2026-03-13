@@ -63,6 +63,9 @@ export async function getCardById(id: string): Promise<CardData | null> {
  *      message TEXT NOT NULL,
  *      sender_name TEXT NOT NULL,
  *      salami_number TEXT DEFAULT '',
+ *      theme TEXT DEFAULT 'emerald',
+ *      lang TEXT DEFAULT 'bn',
+ *      font TEXT DEFAULT 'inter',
  *      created_at TIMESTAMPTZ DEFAULT NOW()
  *    );
  * 2. Set these in .env:
@@ -87,6 +90,9 @@ async function saveToSupabase(id: string, data: CardData): Promise<string> {
       message: data.message,
       sender_name: data.senderName,
       salami_number: data.salamiNumber,
+      theme: data.theme,
+      lang: data.lang,
+      font: data.font,
     }),
   });
 
@@ -121,5 +127,8 @@ async function getFromSupabase(id: string): Promise<CardData | null> {
     message: row.message,
     senderName: row.sender_name,
     salamiNumber: row.salami_number || "",
+    theme: row.theme || "emerald",
+    lang: row.lang || "bn",
+    font: row.font || "inter",
   };
 }

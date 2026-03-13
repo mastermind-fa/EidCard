@@ -10,17 +10,24 @@ import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { ShareButton } from "@/components/share-button";
 import { EidCard } from "@/components/eid-card";
+import { ThemePicker } from "@/components/theme-picker";
+import { FontPicker } from "@/components/font-picker";
+import { LanguageToggle } from "@/components/language-toggle";
 import { cardDataSchema, type CardFormData, MESSAGE_MAX_LENGTH } from "@/lib/validation";
 import { RELATION_TYPES, RELATION_LABELS, type RelationType } from "@/lib/types";
-import { generateMessage, getTemplateByIndex, getTemplateCount } from "@/lib/templates";
+import { getTemplateByIndex, getTemplateCount } from "@/lib/templates";
 import { encodeCardData } from "@/lib/encoding";
 import { getBaseUrl } from "@/lib/utils";
+import { t, type Language } from "@/lib/i18n";
+import type { ThemeId } from "@/lib/themes";
+import type { FontId } from "@/lib/types";
 
 export function CardForm() {
   const [generatedUrl, setGeneratedUrl] = useState<string | null>(null);
   const [isGenerating, setIsGenerating] = useState(false);
   const [userEditedMessage, setUserEditedMessage] = useState(false);
   const [templateIndex, setTemplateIndex] = useState(0);
+  const [lang, setLang] = useState<Language>("bn");
 
   const form = useForm<CardFormData>({
     resolver: zodResolver(cardDataSchema),
@@ -30,6 +37,9 @@ export function CardForm() {
       message: "",
       senderName: "",
       salamiNumber: "",
+      theme: "emerald",
+      lang: "bn",
+      font: "inter",
     },
     mode: "onChange",
   });
@@ -38,25 +48,48 @@ export function CardForm() {
   const watchedValues = watch();
   const { errors } = formState;
 
-  // Auto-generate message when relation type or recipient name changes
   const relationType = watch("relationType");
   const recipientName = watch("recipientName");
 
-  // Auto-fill message from template when relation/name/index changes
+  // Auto-fill message from template when relation/name/index/lang changes
   useEffect(() => {
     if (!userEditedMessage) {
       const name = recipientName || "[Name]";
-      const msg = getTemplateByIndex(relationType as RelationType, templateIndex, name);
+      const msg = getTemplateByIndex(relationType as RelationType, templateIndex, name, lang);
       setValue("message", msg);
     }
-  }, [relationType, recipientName, templateIndex, userEditedMessage, setValue]);
+  }, [relationType, recipientName, templateIndex, lang, userEditedMessage, setValue]);
 
   // Reset template index when relation type changes
   useEffect(() => {
     setTemplateIndex(0);
     setUserEditedMessage(false);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [relationType]);
+
+  const handleLanguageChange = useCallback(
+    (newLang: Language) => {
+      setLang(newLang);
+      setValue("lang", newLang);
+      setUserEditedMessage(false);
+      setTemplateIndex(0);
+    },
+    [setValue]
+  );
+
+  const handleThemeChange = useCallback(
+    (theme: ThemeId) => {
+      setValue("theme", theme);
+    },
+    [setValue]
+  );
+
+  const handleFontChange = useCallback(
+    (font: FontId) => {
+      setValue("font", font);
+    },
+    [setValue]
+  );
 
   const handleMessageChange = useCallback(
     (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -79,8 +112,6 @@ export function CardForm() {
   const onSubmit = useCallback(
     async (data: CardFormData) => {
       setIsGenerating(true);
-
-      // Tiny delay for UX feel
       await new Promise((r) => setTimeout(r, 400));
 
       const { encoded, fitsInUrl } = encodeCardData(data);
@@ -89,7 +120,6 @@ export function CardForm() {
         const url = `${getBaseUrl()}/c?d=${encoded}`;
         setGeneratedUrl(url);
       } else {
-        // Fallback: store in DB via API
         try {
           const res = await fetch("/api/cards", {
             method: "POST",
@@ -99,7 +129,6 @@ export function CardForm() {
           const { id } = await res.json();
           setGeneratedUrl(`${getBaseUrl()}/card/${id}`);
         } catch {
-          // If DB fails, try URL anyway (it might work with longer URLs on most browsers)
           const url = `${getBaseUrl()}/c?d=${encoded}`;
           setGeneratedUrl(url);
         }
@@ -113,16 +142,20 @@ export function CardForm() {
   const resetForm = useCallback(() => {
     setGeneratedUrl(null);
     setUserEditedMessage(false);
+    setTemplateIndex(0);
     form.reset();
+    setLang("bn");
   }, [form]);
 
-  // Build preview data
   const previewData = {
-    recipientName: watchedValues.recipientName || "Someone Special",
+    recipientName: watchedValues.recipientName || (lang === "bn" ? "প্রিয়জন" : "Someone Special"),
     relationType: (watchedValues.relationType || "family") as RelationType,
-    message: watchedValues.message || "Your heartfelt Eid message will appear here...",
-    senderName: watchedValues.senderName || "You",
+    message: watchedValues.message || (lang === "bn" ? "আপনার ঈদের শুভেচ্ছা এখানে দেখা যাবে..." : "Your heartfelt Eid message will appear here..."),
+    senderName: watchedValues.senderName || (lang === "bn" ? "আপনি" : "You"),
     salamiNumber: watchedValues.salamiNumber || "",
+    theme: (watchedValues.theme || "emerald") as ThemeId,
+    lang,
+    font: (watchedValues.font || "inter") as FontId,
   };
 
   if (generatedUrl) {
@@ -133,15 +166,15 @@ export function CardForm() {
             <Sparkles className="h-8 w-8 text-emerald-600" />
           </div>
           <h2 className="text-2xl font-bold text-gray-900 mb-2">
-            Your Eid Card is Ready!
+            {t(lang, "cardReady")}
           </h2>
           <p className="text-gray-500 text-sm">
-            Share this link with {watchedValues.recipientName || "your loved one"}
+            {t(lang, "shareWith")} {watchedValues.recipientName || ""}
           </p>
         </div>
 
         <div className="bg-emerald-50/50 rounded-xl p-4 border border-emerald-200/50">
-          <p className="text-xs text-emerald-600 font-medium mb-2">Your shareable link:</p>
+          <p className="text-xs text-emerald-600 font-medium mb-2">{t(lang, "shareableLink")}</p>
           <p className="text-sm text-gray-700 break-all font-mono bg-white/80 rounded-lg p-3 border border-emerald-100">
             {generatedUrl}
           </p>
@@ -150,16 +183,12 @@ export function CardForm() {
         <ShareButton url={generatedUrl} />
 
         <div className="pt-4">
-          <h3 className="text-sm font-medium text-gray-500 mb-3 text-center">Preview</h3>
+          <h3 className="text-sm font-medium text-gray-500 mb-3 text-center">{t(lang, "preview")}</h3>
           <EidCard data={previewData} animated={false} compact />
         </div>
 
-        <Button
-          onClick={resetForm}
-          variant="ghost"
-          className="w-full"
-        >
-          Create Another Card
+        <Button onClick={resetForm} variant="ghost" className="w-full">
+          {t(lang, "createAnother")}
         </Button>
       </div>
     );
@@ -167,14 +196,19 @@ export function CardForm() {
 
   return (
     <div className="space-y-8">
-      {/* Form */}
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
+        {/* Language Toggle */}
+        <div className="flex items-center justify-between">
+          <Label>{lang === "bn" ? "ভাষা" : "Language"}</Label>
+          <LanguageToggle lang={lang} onChange={handleLanguageChange} />
+        </div>
+
         {/* Recipient Name */}
         <div className="space-y-2">
-          <Label htmlFor="recipientName">Recipient&apos;s Name</Label>
+          <Label htmlFor="recipientName">{t(lang, "recipientName")}</Label>
           <Input
             id="recipientName"
-            placeholder="Enter their name..."
+            placeholder={t(lang, "recipientPlaceholder")}
             {...form.register("recipientName")}
           />
           {errors.recipientName && (
@@ -184,7 +218,7 @@ export function CardForm() {
 
         {/* Relation Type */}
         <div className="space-y-2">
-          <Label htmlFor="relationType">Relation</Label>
+          <Label htmlFor="relationType">{t(lang, "relation")}</Label>
           <select
             id="relationType"
             className="flex h-11 w-full rounded-xl border-2 border-emerald-200/50 bg-white/80 px-4 py-2 text-sm text-gray-900 transition-colors duration-200 focus:border-emerald-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 cursor-pointer"
@@ -193,16 +227,36 @@ export function CardForm() {
           >
             {RELATION_TYPES.map((type) => (
               <option key={type} value={type}>
-                {RELATION_LABELS[type]}
+                {RELATION_LABELS[type][lang]}
               </option>
             ))}
           </select>
         </div>
 
+        {/* Card Theme */}
+        <div className="space-y-2">
+          <Label>{t(lang, "cardTheme")}</Label>
+          <ThemePicker
+            value={(watchedValues.theme || "emerald") as ThemeId}
+            onChange={handleThemeChange}
+            lang={lang}
+          />
+        </div>
+
+        {/* Font */}
+        <div className="space-y-2">
+          <Label>{lang === "bn" ? "ফন্ট" : "Font Style"}</Label>
+          <FontPicker
+            value={(watchedValues.font || "inter") as FontId}
+            onChange={handleFontChange}
+            lang={lang}
+          />
+        </div>
+
         {/* Message */}
         <div className="space-y-2">
           <div className="flex items-center justify-between">
-            <Label htmlFor="message">Eid Message</Label>
+            <Label htmlFor="message">{t(lang, "eidMessage")}</Label>
             <div className="flex items-center gap-3">
               {userEditedMessage && (
                 <button
@@ -213,7 +267,7 @@ export function CardForm() {
                   }}
                   className="text-xs text-emerald-600 hover:text-emerald-700 underline cursor-pointer"
                 >
-                  Reset to template
+                  {t(lang, "resetTemplate")}
                 </button>
               )}
               <button
@@ -226,7 +280,7 @@ export function CardForm() {
                 title="Try a different message"
               >
                 <Shuffle className="h-3 w-3" />
-                Shuffle ({getTemplateCount(relationType as RelationType)} styles)
+                {t(lang, "shuffle")} ({getTemplateCount(relationType as RelationType, lang)} {t(lang, "styles")})
               </button>
             </div>
           </div>
@@ -236,7 +290,7 @@ export function CardForm() {
             value={watchedValues.message}
             onChange={handleMessageChange}
             maxLength={MESSAGE_MAX_LENGTH}
-            placeholder="Your heartfelt Eid message..."
+            placeholder={lang === "bn" ? "আপনার ঈদের শুভেচ্ছা লিখুন..." : "Your heartfelt Eid message..."}
           />
           <div className="flex items-center justify-between">
             {errors.message ? (
@@ -260,10 +314,10 @@ export function CardForm() {
 
         {/* Sender Name */}
         <div className="space-y-2">
-          <Label htmlFor="senderName">From (Your Name)</Label>
+          <Label htmlFor="senderName">{t(lang, "fromName")}</Label>
           <Input
             id="senderName"
-            placeholder="Your name..."
+            placeholder={t(lang, "fromPlaceholder")}
             {...form.register("senderName")}
           />
           {errors.senderName && (
@@ -274,16 +328,16 @@ export function CardForm() {
         {/* Salami Number */}
         <div className="space-y-2">
           <Label htmlFor="salamiNumber">
-            Salami Number{" "}
-            <span className="text-gray-400 font-normal">(optional)</span>
+            {t(lang, "salamiLabel")}{" "}
+            <span className="text-gray-400 font-normal">{t(lang, "salamiOptional")}</span>
           </Label>
           <Input
             id="salamiNumber"
-            placeholder="e.g. 01XXXXXXXXX (bKash/Nagad/Rocket)"
+            placeholder={t(lang, "salamiPlaceholder")}
             {...form.register("salamiNumber")}
           />
           <p className="text-xs text-gray-400">
-            Recipients can copy this number to send Salami
+            {t(lang, "salamiHint")}
           </p>
         </div>
 
@@ -297,12 +351,12 @@ export function CardForm() {
           {isGenerating ? (
             <>
               <Loader2 className="h-5 w-5 animate-spin" />
-              Creating your card...
+              {t(lang, "creating")}
             </>
           ) : (
             <>
               <Sparkles className="h-5 w-5" />
-              Create Eid Card Link
+              {t(lang, "createButton")}
             </>
           )}
         </Button>
@@ -311,7 +365,7 @@ export function CardForm() {
       {/* Live Preview */}
       <div>
         <h3 className="text-sm font-medium text-gray-400 mb-3 text-center uppercase tracking-wider">
-          Live Preview
+          {t(lang, "livePreview")}
         </h3>
         <EidCard data={previewData} animated={false} compact />
       </div>

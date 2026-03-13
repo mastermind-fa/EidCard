@@ -1,13 +1,23 @@
 "use client";
 
+import { useState } from "react";
 import { motion } from "framer-motion";
 import { Moon, Sparkles, ArrowRight } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import { LanguageToggle } from "@/components/language-toggle";
+import { t, type Language } from "@/lib/i18n";
 
 export function Hero() {
+  const [lang, setLang] = useState<Language>("en");
+
   return (
     <section className="relative min-h-[85vh] flex flex-col items-center justify-center px-4 py-16 overflow-hidden">
+      {/* Language toggle */}
+      <div className="absolute top-4 right-4 z-20">
+        <LanguageToggle lang={lang} onChange={setLang} />
+      </div>
+
       {/* Background decorations */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-10 left-10 w-2 h-2 rounded-full bg-amber-400/40 animate-pulse" />
@@ -23,7 +33,6 @@ export function Hero() {
         transition={{ duration: 0.7 }}
         className="text-center max-w-2xl mx-auto relative z-10"
       >
-        {/* Icon */}
         <motion.div
           initial={{ scale: 0, rotate: -180 }}
           animate={{ scale: 1, rotate: 0 }}
@@ -33,7 +42,6 @@ export function Hero() {
           <Moon className="h-10 w-10 text-emerald-600" />
         </motion.div>
 
-        {/* Heading */}
         <motion.div
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
@@ -42,7 +50,7 @@ export function Hero() {
           <div className="inline-flex items-center gap-2 mb-4 px-4 py-1.5 rounded-full bg-amber-50 border border-amber-200/50">
             <Sparkles className="h-3.5 w-3.5 text-amber-500" />
             <span className="text-xs font-medium text-amber-700 tracking-wider uppercase">
-              Eid ul-Fitr Mubarak
+              {t(lang, "heroTagline")}
             </span>
             <Sparkles className="h-3.5 w-3.5 text-amber-500" />
           </div>
@@ -55,11 +63,11 @@ export function Hero() {
           className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-4"
         >
           <span className="bg-gradient-to-r from-emerald-700 via-emerald-600 to-amber-600 bg-clip-text text-transparent">
-            Send Beautiful
+            {t(lang, "heroTitle1")}
           </span>
           <br />
           <span className="bg-gradient-to-r from-amber-600 via-emerald-600 to-emerald-700 bg-clip-text text-transparent">
-            Eid Wishes
+            {t(lang, "heroTitle2")}
           </span>
         </motion.h1>
 
@@ -69,7 +77,7 @@ export function Hero() {
           transition={{ delay: 0.5, duration: 0.6 }}
           className="text-gray-500 text-lg sm:text-xl mb-8 max-w-md mx-auto leading-relaxed"
         >
-          Create a personalized Eid greeting card and share it with your loved ones in seconds
+          {t(lang, "heroSubtitle")}
         </motion.p>
 
         <motion.div
@@ -80,7 +88,7 @@ export function Hero() {
         >
           <Link href="/create">
             <Button size="lg" className="text-base px-8 h-14 shadow-xl shadow-emerald-600/20">
-              Create Your Eid Card
+              {t(lang, "heroCta")}
               <ArrowRight className="h-5 w-5 ml-1" />
             </Button>
           </Link>
@@ -95,23 +103,21 @@ export function Hero() {
         className="mt-16 w-full max-w-md mx-auto px-4"
       >
         <div className="relative">
-          {/* Shadow card behind */}
           <div className="absolute -top-2 left-4 right-4 h-full bg-emerald-200/20 rounded-2xl rotate-2" />
           <div className="absolute -top-1 left-2 right-2 h-full bg-emerald-100/30 rounded-2xl rotate-1" />
 
-          {/* Main preview card */}
           <div className="relative bg-white/90 backdrop-blur-md rounded-2xl shadow-2xl shadow-emerald-900/10 border border-emerald-100/50 p-6 overflow-hidden">
             <div className="absolute top-0 right-0 w-24 h-24 bg-gradient-to-bl from-amber-400/10 to-transparent rounded-bl-full" />
             <div className="text-center mb-4">
               <div className="inline-flex items-center gap-1.5 mb-2">
                 <Sparkles className="h-3 w-3 text-amber-500" />
                 <span className="text-[10px] font-medium text-amber-600 uppercase tracking-[0.15em]">
-                  Eid ul-Fitr
+                  {t(lang, "eidUlFitr")}
                 </span>
                 <Sparkles className="h-3 w-3 text-amber-500" />
               </div>
               <h3 className="text-xl font-bold bg-gradient-to-r from-emerald-700 to-amber-600 bg-clip-text text-transparent">
-                ঈদ মোবারক
+                {t(lang, "eidMubarak")}
               </h3>
             </div>
             <div className="flex items-center gap-2 mb-3">
@@ -120,9 +126,13 @@ export function Hero() {
               <div className="flex-1 h-px bg-gradient-to-r from-transparent via-emerald-300/40 to-transparent" />
             </div>
             <p className="text-sm text-gray-500 leading-relaxed text-center mb-3">
-              A personalized heartfelt message for your loved ones...
+              {lang === "bn"
+                ? "আপনার প্রিয়জনদের জন্য একটি হৃদয়গ্রাহী বার্তা..."
+                : "A personalized heartfelt message for your loved ones..."}
             </p>
-            <p className="text-right text-sm font-medium text-emerald-600">— Your Name</p>
+            <p className="text-right text-sm font-medium text-emerald-600">
+              — {lang === "bn" ? "আপনার নাম" : "Your Name"}
+            </p>
           </div>
         </div>
       </motion.div>

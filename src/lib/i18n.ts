@@ -1,0 +1,106 @@
+export const LANGUAGES = ["en", "bn"] as const;
+export type Language = (typeof LANGUAGES)[number];
+
+export const LANGUAGE_LABELS: Record<Language, string> = {
+  en: "English",
+  bn: "বাংলা",
+};
+
+const translations = {
+  en: {
+    heroTagline: "Eid ul-Fitr Mubarak",
+    heroTitle1: "Send Beautiful",
+    heroTitle2: "Eid Wishes",
+    heroSubtitle:
+      "Create a personalized Eid greeting card and share it with your loved ones in seconds",
+    heroCta: "Create Your Eid Card",
+    createTitle: "Create Your Eid Card",
+    createSubtitle:
+      "Fill in the details and we'll create a beautiful card for you",
+    recipientName: "Recipient's Name",
+    recipientPlaceholder: "Enter their name...",
+    relation: "Relation",
+    eidMessage: "Eid Message",
+    resetTemplate: "Reset to template",
+    shuffle: "Shuffle",
+    styles: "styles",
+    fromName: "From (Your Name)",
+    fromPlaceholder: "Your name...",
+    salamiLabel: "Salami Number",
+    salamiOptional: "(optional)",
+    salamiPlaceholder: "e.g. 01XXXXXXXXX (bKash/Nagad/Rocket)",
+    salamiHint: "Recipients can copy this number to send Salami",
+    createButton: "Create Eid Card Link",
+    creating: "Creating your card...",
+    cardTheme: "Card Theme",
+    cardReady: "Your Eid Card is Ready!",
+    shareWith: "Share this link with",
+    shareableLink: "Your shareable link:",
+    createAnother: "Create Another Card",
+    preview: "Preview",
+    livePreview: "Live Preview",
+    specialWish: "You have a special Eid wish",
+    createOwn: "Create your own Eid card",
+    withLove: "With love,",
+    eidMubarak: "ঈদ মোবারক",
+    eidMubarakSub: "Eid Mubarak",
+    eidUlFitr: "Eid ul-Fitr",
+    salami: "Salami",
+    salamiSend: "Send your Salami to this number",
+    copy: "Copy",
+    copied: "Copied!",
+    home: "Home",
+    eidCard: "Eid Card",
+  },
+  bn: {
+    heroTagline: "ঈদ উল-ফিতর মোবারক",
+    heroTitle1: "সুন্দর ঈদের",
+    heroTitle2: "শুভেচ্ছা পাঠান",
+    heroSubtitle:
+      "আপনার প্রিয়জনদের জন্য ব্যক্তিগত ঈদ কার্ড তৈরি করুন এবং মুহূর্তেই শেয়ার করুন",
+    heroCta: "ঈদ কার্ড তৈরি করুন",
+    createTitle: "আপনার ঈদ কার্ড তৈরি করুন",
+    createSubtitle:
+      "তথ্য পূরণ করুন, আমরা আপনার জন্য একটি সুন্দর কার্ড তৈরি করবো",
+    recipientName: "প্রাপকের নাম",
+    recipientPlaceholder: "তাদের নাম লিখুন...",
+    relation: "সম্পর্ক",
+    eidMessage: "ঈদের বার্তা",
+    resetTemplate: "টেমপ্লেটে ফিরুন",
+    shuffle: "পরিবর্তন",
+    styles: "টি স্টাইল",
+    fromName: "প্রেরক (আপনার নাম)",
+    fromPlaceholder: "আপনার নাম...",
+    salamiLabel: "সালামি নম্বর",
+    salamiOptional: "(ঐচ্ছিক)",
+    salamiPlaceholder: "যেমন: ০১XXXXXXXXX (বিকাশ/নগদ/রকেট)",
+    salamiHint: "প্রাপক এই নম্বরে সালামি পাঠাতে পারবেন",
+    createButton: "ঈদ কার্ড লিংক তৈরি করুন",
+    creating: "কার্ড তৈরি হচ্ছে...",
+    cardTheme: "কার্ড থিম",
+    cardReady: "আপনার ঈদ কার্ড প্রস্তুত!",
+    shareWith: "এই লিংক শেয়ার করুন",
+    shareableLink: "আপনার শেয়ারযোগ্য লিংক:",
+    createAnother: "আরেকটি কার্ড তৈরি করুন",
+    preview: "প্রিভিউ",
+    livePreview: "লাইভ প্রিভিউ",
+    specialWish: "আপনার জন্য একটি বিশেষ ঈদের শুভেচ্ছা",
+    createOwn: "নিজের ঈদ কার্ড তৈরি করুন",
+    withLove: "ভালোবাসায়,",
+    eidMubarak: "ঈদ মোবারক",
+    eidMubarakSub: "Eid Mubarak",
+    eidUlFitr: "ঈদ উল-ফিতর",
+    salami: "সালামি",
+    salamiSend: "এই নম্বরে সালামি পাঠান",
+    copy: "কপি",
+    copied: "কপি হয়েছে!",
+    home: "হোম",
+    eidCard: "ঈদ কার্ড",
+  },
+} as const;
+
+export type TranslationKey = keyof (typeof translations)["en"];
+
+export function t(lang: Language, key: TranslationKey): string {
+  return translations[lang][key];
+}
