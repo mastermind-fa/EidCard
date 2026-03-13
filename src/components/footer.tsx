@@ -30,7 +30,7 @@ export function Footer({ variant = "dark" }: FooterProps) {
         <Heart className={`h-3.5 w-3.5 ${heartColor}`} />
         <span>for Eid by</span>
         <a
-          href="https://github.com/farhanaalam"
+          href="https://github.com/mastermind-fa"
           target="_blank"
           rel="noopener noreferrer"
           className={`font-medium underline underline-offset-2 transition-colors ${linkColor}`}
@@ -43,7 +43,7 @@ export function Footer({ variant = "dark" }: FooterProps) {
       {/* Social links */}
       <div className={`flex items-center justify-center gap-4 ${textColor}`}>
         <a
-          href="https://github.com/farhanaalam"
+          href="https://github.com/mastermind-fa"
           target="_blank"
           rel="noopener noreferrer"
           aria-label="GitHub"
@@ -54,7 +54,7 @@ export function Footer({ variant = "dark" }: FooterProps) {
           </svg>
         </a>
         <a
-          href="https://linkedin.com/in/farhanaalam"
+          href="https://www.linkedin.com/in/mastermindfa/"
           target="_blank"
           rel="noopener noreferrer"
           aria-label="LinkedIn"
