@@ -4,13 +4,13 @@ A production-ready, mobile-first Eid greeting card generator and shareable link 
 
 ## Features
 
-- **Personalized Eid cards** — Create heartfelt cards with recipient name, relation type, and custom message
+- **Personalized Eid cards** — Create heartfelt cards with recipient name, relation type, and custom message (500-character limit with live counter)
 - **Bengali/English toggle** — Full i18n support; switch language for UI and message templates
 - **8 relation types** — Senior Vaiya, Senior Apu, Junior Vaiya, Junior Apu, Sir, Madam, Family, Friends
 - **20 casual templates for Senior Vaiya/Apu** — Short, breezy wishes for acquaintances and people you know but don’t interact much
 - **5 card themes** — Emerald Classic, Royal Navy, Rose Blossom, Midnight Gold, Golden Desert
 - **4 font styles** — Modern, Elegant, Bengali Classic, Bengali Serif
-- **PDF download** — Save the card as a PDF to share or keep
+- **PDF download** — Save the card as a full-page, theme-styled PDF (matches website aesthetic)
 - **Salami section** — Optional payment number with one-tap copy
 - **Shareable links** — URL-encoded cards (no database needed); instant delivery
 - **Mobile-first** — Optimized for phones; works great on desktop too
@@ -248,7 +248,16 @@ Use the **Shuffle** button to cycle through 20 different styles per relation.
 
 ## PDF Download
 
-Recipients can download the card as a PDF from the card view page. The PDF is generated client-side using `html2canvas` and `jspdf`, so no server is needed. The file is saved as `eid-mubarak-<recipient-name>.pdf`.
+Recipients can download the card as a PDF from the card view page. The PDF is generated client-side using `html2canvas` and `jspdf`, so no server is needed.
+
+**Features:**
+- **Full-page layout** — Card fills the entire PDF page (A5) with no white margins
+- **Theme background** — Full-page gradient matches the selected card theme (Emerald, Navy, Rose, Midnight, Golden)
+- **Website-matching aesthetic** — Theme colors, gradients, shadows, and typography mirror the live card
+- **All 5 themes supported** — Each theme has hex-based fallback styles (html2canvas can’t parse Tailwind’s oklab)
+- **Decorative icons** — Sparkles (✦), Moon (🌙), and Gift (🎁) rendered as Unicode when SVGs are unavailable
+
+The file is saved as `eid-mubarak-<recipient-name>.pdf`.
 
 ## Future Upgrades
 

@@ -30,7 +30,7 @@ export function Footer({ variant = "dark" }: FooterProps) {
         <Heart className={`h-3.5 w-3.5 ${heartColor}`} />
         <span>for Eid by</span>
         <a
-          href="https://github.com/mastermind-fa"
+          href="https://github.com/mastermind-fa/EidCard"
           target="_blank"
           rel="noopener noreferrer"
           className={`font-medium underline underline-offset-2 transition-colors ${linkColor}`}
