@@ -2,6 +2,19 @@
 
 A production-ready, mobile-first Eid greeting card generator and shareable link creator. Built with Next.js, TypeScript, and Tailwind CSS.
 
+## Features
+
+- **Personalized Eid cards** — Create heartfelt cards with recipient name, relation type, and custom message
+- **Bengali/English toggle** — Full i18n support; switch language for UI and message templates
+- **8 relation types** — Senior Vaiya, Senior Apu, Junior Vaiya, Junior Apu, Sir, Madam, Family, Friends
+- **20 casual templates for Senior Vaiya/Apu** — Short, breezy wishes for acquaintances and people you know but don’t interact much
+- **5 card themes** — Emerald Classic, Royal Navy, Rose Blossom, Midnight Gold, Golden Desert
+- **4 font styles** — Modern, Elegant, Bengali Classic, Bengali Serif
+- **PDF download** — Save the card as a PDF to share or keep
+- **Salami section** — Optional payment number with one-tap copy
+- **Shareable links** — URL-encoded cards (no database needed); instant delivery
+- **Mobile-first** — Optimized for phones; works great on desktop too
+
 ## Architecture
 
 ### Why URL-encoded cards?
@@ -46,6 +59,7 @@ User creates card → Data compressed with LZ-String → Encoded in URL → Reci
 - **Animations:** Framer Motion
 - **Form handling:** React Hook Form + Zod validation
 - **URL encoding:** LZ-String compression
+- **PDF export:** `jspdf` + `html2canvas`
 - **Icons:** Lucide React
 - **Notifications:** Sonner
 
@@ -115,6 +129,9 @@ CREATE TABLE cards (
   message TEXT NOT NULL,
   sender_name TEXT NOT NULL,
   salami_number TEXT DEFAULT '',
+  theme TEXT DEFAULT 'emerald',
+  lang TEXT DEFAULT 'bn',
+  font TEXT DEFAULT 'inter',
   created_at TIMESTAMPTZ DEFAULT NOW()
 );
 
@@ -171,7 +188,7 @@ src/
 │   │   └── page.tsx        # Card creation form
 │   ├── c/
 │   │   ├── page.tsx        # URL-encoded card view (SSR)
-│   │   └── card-view-client.tsx  # Card display with animations
+│   │   └── card-view-client.tsx  # Card display + PDF download
 │   ├── card/
 │   │   └── [id]/
 │   │       └── page.tsx    # DB-backed card view (fallback)
@@ -180,21 +197,24 @@ src/
 │           └── route.ts    # POST endpoint for DB storage
 ├── components/
 │   ├── ui/                 # Base UI components (shadcn-style)
-│   │   ├── button.tsx
-│   │   ├── input.tsx
-│   │   ├── textarea.tsx
-│   │   └── label.tsx
 │   ├── eid-card.tsx        # Main card display component
 │   ├── card-form.tsx       # Card creation form with live preview
 │   ├── salami-section.tsx  # Salami display + copy button
 │   ├── copy-button.tsx     # Reusable copy-to-clipboard
 │   ├── share-button.tsx    # Web Share API + copy fallback
+│   ├── pdf-download-button.tsx  # PDF export
+│   ├── theme-picker.tsx    # Card theme selection
+│   ├── font-picker.tsx     # Font style selection
+│   ├── language-toggle.tsx # Bengali/English toggle
 │   ├── hero.tsx            # Landing page hero section
 │   └── footer.tsx          # Site footer
 └── lib/
     ├── types.ts            # TypeScript types + constants
-    ├── templates.ts        # Eid message templates per relation
+    ├── templates.ts        # Eid message templates (incl. casual for Senior Vaiya/Apu)
+    ├── i18n.ts             # Translations (Bengali + English)
+    ├── themes.ts           # Card theme definitions
     ├── encoding.ts         # LZ-String URL encoding/decoding
+    ├── pdf.ts              # PDF export utility
     ├── validation.ts       # Zod schemas
     ├── utils.ts            # Utilities (cn, clipboard, share)
     └── db.ts               # Database layer (memory/Supabase)
@@ -202,17 +222,33 @@ src/
 
 ## Message Templates
 
-Pre-built heartfelt Bengali Eid messages for 5 relation types:
+Pre-built heartfelt Eid messages for 8 relation types:
 
 | Type | Tone |
 |------|------|
-| Senior Vaiya/Apu | Respectful, warm, affectionate |
-| Junior Vaiya/Apu | Caring, sweet, encouraging |
+| Senior Vaiya | Respectful, warm; **20 templates** including many casual for acquaintances |
+| Senior Apu | Respectful, warm; **20 templates** including many casual for acquaintances |
+| Junior Vaiya | Caring, sweet, encouraging |
+| Junior Apu | Caring, sweet, encouraging |
 | Sir | Respectful, formal, heartfelt |
 | Madam | Elegant, warm, gracious |
 | Family | Emotional, close, loving |
+| Friends | Casual, fun, buddy |
 
-Templates are centralized in `src/lib/templates.ts` for easy editing and future i18n.
+### Casual templates for Senior Vaiya/Apu
+
+For people you know but don’t interact much — distant relatives, acquaintances, colleagues’ family, etc.:
+
+- Short, breezy wishes
+- Polite but not overly formal
+- No heavy emotional language
+- Suitable for “we’ve met but aren’t close” situations
+
+Use the **Shuffle** button to cycle through 20 different styles per relation.
+
+## PDF Download
+
+Recipients can download the card as a PDF from the card view page. The PDF is generated client-side using `html2canvas` and `jspdf`, so no server is needed. The file is saved as `eid-mubarak-<recipient-name>.pdf`.
 
 ## Future Upgrades
 
@@ -227,8 +263,6 @@ The Salami section UI is built and ready. To add payment integration:
 
 ### Other Ideas
 
-- **Bengali/English toggle** — i18n with next-intl
-- **Custom card themes** — Multiple card design templates
 - **Image/photo cards** — Upload photos for the card
 - **Audio messages** — Record voice Eid wishes
 - **Analytics** — Track card views (privacy-respecting)

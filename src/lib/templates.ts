@@ -31,6 +31,75 @@ export const MESSAGE_TEMPLATES: Record<Language, Record<RelationType, string[]>>
 আপনার পরামর্শ, ভালোবাসা ও সাপোর্ট আমাকে সবসময় এগিয়ে যেতে সাহায্য করেছে। এই পবিত্র ঈদুল ফিতরে আল্লাহ্ আপনাকে ও আপনার পরিবারের সবাইকে সুস্থ, সুখী ও সমৃদ্ধ রাখুন।
 
 গভীর শ্রদ্ধা ও ভালোবাসায়। ঈদ মোবারক! 💛`,
+
+      // Casual — acquaintances, distant relatives, people you know but don't interact much
+      `{name} ভাইয়া, ঈদ মোবারক! 🌙
+
+শুভেচ্ছা রইলো। এই ঈদে আপনার ও পরিবারের জন্য দোয়া। ভালো থাকুন! 💛`,
+
+      `ঈদ মোবারক {name} ভাইয়া! 🌙
+
+আপনার জন্য শুভকামনা। আল্লাহ্ আপনাকে সুখী রাখুন। 💛`,
+
+      `হ্যালো {name} ভাইয়া, ঈদ মোবারক! 🌙
+
+শুভেচ্ছা জানাচ্ছি। এই ঈদটা আপনার জন্য সুন্দর হোক। 💛`,
+
+      `{name} ভাইয়া, ঈদ মোবারক! 🌙
+
+কেমন আছেন? আপনার জন্য দোয়া রইলো। ভালো থাকুন। 💛`,
+
+      `ঈদ মোবারক! 🌙
+
+{name} ভাইয়া, আপনার ও আপনার পরিবারের জন্য শুভকামনা। এই ঈদ আনন্দময় হোক। 💛`,
+
+      `প্রিয় {name} ভাইয়া,
+
+ঈদ মোবারক! আপনার জন্য অনেক শুভেচ্ছা। আল্লাহ্ বরকত দিন। 💛`,
+
+      `{name} ভাইয়া, ঈদ মোবারক! 🌙
+
+আপনার সুস্থতা ও সুখ কামনা করি। ভালো থাকুন। 💛`,
+
+      `ঈদ মোবারক {name} ভাইয়া! 🌙
+
+শুভেচ্ছা ও দোয়া রইলো। এই ঈদ আপনার জন্য বরকতময় হোক। 💛`,
+
+      `হাই {name} ভাইয়া, ঈদ মোবারক! 🌙
+
+আপনার জন্য শুভকামনা। আল্লাহ্ আপনাকে রক্ষা করুন। 💛`,
+
+      `{name} ভাইয়া, ঈদ মোবারক! 🌙
+
+আপনার ও পরিবারের জন্য দোয়া। সুখে থাকুন। 💛`,
+
+      `ঈদ মোবারক! 🌙
+
+{name} ভাইয়া, আপনার জন্য শুভেচ্ছা। এই ঈদ আনন্দে কাটুক। 💛`,
+
+      `প্রিয় {name} ভাইয়া, ঈদ মোবারক! 🌙
+
+শুভকামনা রইলো। ভালো থাকুন, সুখে থাকুন। 💛`,
+
+      `{name} ভাইয়া, ঈদ মোবারক! 🌙
+
+আপনার জন্য দোয়া। আল্লাহ্ বরকত দান করুন। 💛`,
+
+      `ঈদ মোবারক {name} ভাইয়া! 🌙
+
+শুভেচ্ছা জানাচ্ছি। আপনার সুখ কামনা করি। 💛`,
+
+      `হ্যালো {name} ভাইয়া! ঈদ মোবারক 🌙
+
+আপনার জন্য শুভকামনা। এই ঈদ সুন্দর হোক। 💛`,
+
+      `{name} ভাইয়া, ঈদ মোবারক! 🌙
+
+আপনার পরিবারের জন্য দোয়া। ভালো থাকুন। 💛`,
+
+      `ঈদ মোবারক! 🌙
+
+{name} ভাইয়া, আপনার জন্য শুভেচ্ছা ও দোয়া। সুখে থাকুন। 💛`,
     ],
 
     "senior-apu": [
@@ -57,6 +126,83 @@ export const MESSAGE_TEMPLATES: Record<Language, Record<RelationType, string[]>>
 আপনাকে দেখে, আপনার কাছ থেকে শিখে আমি অনেক কিছু বুঝতে পেরেছি। আপনার মতো মানুষ জীবনে পাওয়া সত্যিই আল্লাহর রহমত। এই ঈদে আপনার জীবনে অনেক অনেক আনন্দ আসুক।
 
 গভীর শ্রদ্ধা ও ভালোবাসায়। ঈদ মোবারক! 💛`,
+
+      // Casual — acquaintances, distant relatives, people you know but don't interact much
+      `{name} আপু, ঈদ মোবারক! 🌙
+
+শুভেচ্ছা রইলো। এই ঈদে আপনার ও পরিবারের জন্য দোয়া। ভালো থাকুন! 💛`,
+
+      `ঈদ মোবারক {name} আপু! 🌙
+
+আপনার জন্য শুভকামনা। আল্লাহ্ আপনাকে সুখী রাখুন। 💛`,
+
+      `হ্যালো {name} আপু, ঈদ মোবারক! 🌙
+
+শুভেচ্ছা জানাচ্ছি। এই ঈদটা আপনার জন্য সুন্দর হোক। 💛`,
+
+      `{name} আপু, ঈদ মোবারক! 🌙
+
+কেমন আছেন? আপনার জন্য দোয়া রইলো। ভালো থাকুন। 💛`,
+
+      `ঈদ মোবারক! 🌙
+
+{name} আপু, আপনার ও আপনার পরিবারের জন্য শুভকামনা। এই ঈদ আনন্দময় হোক। 💛`,
+
+      `প্রিয় {name} আপু,
+
+ঈদ মোবারক! আপনার জন্য অনেক শুভেচ্ছা। আল্লাহ্ বরকত দিন। 💛`,
+
+      `{name} আপু, ঈদ মোবারক! 🌙
+
+আপনার সুস্থতা ও সুখ কামনা করি। ভালো থাকুন। 💛`,
+
+      `ঈদ মোবারক {name} আপু! 🌙
+
+শুভেচ্ছা ও দোয়া রইলো। এই ঈদ আপনার জন্য বরকতময় হোক। 💛`,
+
+      `হাই {name} আপু, ঈদ মোবারক! 🌙
+
+আপনার জন্য শুভকামনা। আল্লাহ্ আপনাকে রক্ষা করুন। 💛`,
+
+      `{name} আপু, ঈদ মোবারক! 🌙
+
+আপনার ও পরিবারের জন্য দোয়া। সুখে থাকুন। 💛`,
+
+      `ঈদ মোবারক! 🌙
+
+{name} আপু, আপনার জন্য শুভেচ্ছা। এই ঈদ আনন্দে কাটুক। 💛`,
+
+      `প্রিয় {name} আপু, ঈদ মোবারক! 🌙
+
+শুভকামনা রইলো। ভালো থাকুন, সুখে থাকুন। 💛`,
+
+      `{name} আপু, ঈদ মোবারক! 🌙
+
+আপনার জন্য দোয়া। আল্লাহ্ বরকত দান করুন। 💛`,
+
+      `ঈদ মোবারক {name} আপু! 🌙
+
+শুভেচ্ছা জানাচ্ছি। আপনার সুখ কামনা করি। 💛`,
+
+      `হ্যালো {name} আপু! ঈদ মোবারক 🌙
+
+আপনার জন্য শুভকামনা। এই ঈদ সুন্দর হোক। 💛`,
+
+      `{name} আপু, ঈদ মোবারক! 🌙
+
+আপনার পরিবারের জন্য দোয়া। ভালো থাকুন। 💛`,
+
+      `ঈদ মোবারক! 🌙
+
+{name} আপু, আপনার জন্য শুভেচ্ছা ও দোয়া। সুখে থাকুন। 💛`,
+
+      `প্রিয় {name} আপু, ঈদ মোবারক! 🌙
+
+আপনার সুস্থতা কামনা করি। এই ঈদ আনন্দে ভরপুর হোক। 💛`,
+
+      `{name} আপু, ঈদ মোবারক! 🌙
+
+শুভেচ্ছা রইলো। আল্লাহ্ আপনাকে রক্ষা করুন। ভালো থাকুন। 💛`,
     ],
 
     "junior-vaiya": [
@@ -249,6 +395,83 @@ Eid Mubarak! 🌙
 Your support and advice have always pushed me forward. On this holy Eid ul-Fitr, may Allah shower His blessings on you and your family.
 
 With heartfelt respect. Eid Mubarak! 💛`,
+
+      // Casual — acquaintances, distant relatives, people you know but don't interact much
+      `{name} Bhai, Eid Mubarak! 🌙
+
+Wishing you and your family a blessed Eid. Take care! 💛`,
+
+      `Eid Mubarak {name} Bhai! 🌙
+
+Sending you warm wishes. May Allah bless you with happiness. 💛`,
+
+      `Hi {name} Bhai, Eid Mubarak! 🌙
+
+Hope you have a wonderful Eid. Best wishes! 💛`,
+
+      `{name} Bhai, Eid Mubarak! 🌙
+
+How are you? Sending you prayers and good wishes. Stay well. 💛`,
+
+      `Eid Mubarak! 🌙
+
+{name} Bhai, wishing you and your family a joyful Eid. 💛`,
+
+      `Dear {name} Bhai,
+
+Eid Mubarak! Sending you warm wishes. May Allah bless you. 💛`,
+
+      `{name} Bhai, Eid Mubarak! 🌙
+
+Wishing you health and happiness. Take care. 💛`,
+
+      `Eid Mubarak {name} Bhai! 🌙
+
+Sending prayers and good wishes. May this Eid be blessed for you. 💛`,
+
+      `Hey {name} Bhai, Eid Mubarak! 🌙
+
+Best wishes to you. May Allah protect you. 💛`,
+
+      `{name} Bhai, Eid Mubarak! 🌙
+
+Prayers for you and your family. Stay happy. 💛`,
+
+      `Eid Mubarak! 🌙
+
+{name} Bhai, sending you warm wishes. Hope you have a great Eid. 💛`,
+
+      `Dear {name} Bhai, Eid Mubarak! 🌙
+
+Best wishes to you. Stay well and happy. 💛`,
+
+      `{name} Bhai, Eid Mubarak! 🌙
+
+Prayers for you. May Allah bless you. 💛`,
+
+      `Eid Mubarak {name} Bhai! 🌙
+
+Sending you good wishes. Wishing you happiness. 💛`,
+
+      `Hi {name} Bhai! Eid Mubarak 🌙
+
+Best wishes to you. Hope this Eid is wonderful. 💛`,
+
+      `{name} Bhai, Eid Mubarak! 🌙
+
+Prayers for your family. Take care. 💛`,
+
+      `Eid Mubarak! 🌙
+
+{name} Bhai, sending you wishes and prayers. Stay happy. 💛`,
+
+      `Dear {name} Bhai, Eid Mubarak! 🌙
+
+Wishing you good health. May this Eid be full of joy. 💛`,
+
+      `{name} Bhai, Eid Mubarak! 🌙
+
+Best wishes. May Allah protect you. Take care. 💛`,
     ],
 
     "senior-apu": [
@@ -275,6 +498,83 @@ Eid Mubarak! 🌙
 Having you in my life is truly a blessing from Allah. I've learned so much from you. May this Eid fill your life with immense joy.
 
 With deep respect and love. Eid Mubarak! 💛`,
+
+      // Casual — acquaintances, distant relatives, people you know but don't interact much
+      `{name} Apu, Eid Mubarak! 🌙
+
+Wishing you and your family a blessed Eid. Take care! 💛`,
+
+      `Eid Mubarak {name} Apu! 🌙
+
+Sending you warm wishes. May Allah bless you with happiness. 💛`,
+
+      `Hi {name} Apu, Eid Mubarak! 🌙
+
+Hope you have a wonderful Eid. Best wishes! 💛`,
+
+      `{name} Apu, Eid Mubarak! 🌙
+
+How are you? Sending you prayers and good wishes. Stay well. 💛`,
+
+      `Eid Mubarak! 🌙
+
+{name} Apu, wishing you and your family a joyful Eid. 💛`,
+
+      `Dear {name} Apu,
+
+Eid Mubarak! Sending you warm wishes. May Allah bless you. 💛`,
+
+      `{name} Apu, Eid Mubarak! 🌙
+
+Wishing you health and happiness. Take care. 💛`,
+
+      `Eid Mubarak {name} Apu! 🌙
+
+Sending prayers and good wishes. May this Eid be blessed for you. 💛`,
+
+      `Hey {name} Apu, Eid Mubarak! 🌙
+
+Best wishes to you. May Allah protect you. 💛`,
+
+      `{name} Apu, Eid Mubarak! 🌙
+
+Prayers for you and your family. Stay happy. 💛`,
+
+      `Eid Mubarak! 🌙
+
+{name} Apu, sending you warm wishes. Hope you have a great Eid. 💛`,
+
+      `Dear {name} Apu, Eid Mubarak! 🌙
+
+Best wishes to you. Stay well and happy. 💛`,
+
+      `{name} Apu, Eid Mubarak! 🌙
+
+Prayers for you. May Allah bless you. 💛`,
+
+      `Eid Mubarak {name} Apu! 🌙
+
+Sending you good wishes. Wishing you happiness. 💛`,
+
+      `Hi {name} Apu! Eid Mubarak 🌙
+
+Best wishes to you. Hope this Eid is wonderful. 💛`,
+
+      `{name} Apu, Eid Mubarak! 🌙
+
+Prayers for your family. Take care. 💛`,
+
+      `Eid Mubarak! 🌙
+
+{name} Apu, sending you wishes and prayers. Stay happy. 💛`,
+
+      `Dear {name} Apu, Eid Mubarak! 🌙
+
+Wishing you good health. May this Eid be full of joy. 💛`,
+
+      `{name} Apu, Eid Mubarak! 🌙
+
+Best wishes. May Allah protect you. Take care. 💛`,
     ],
 
     "junior-vaiya": [

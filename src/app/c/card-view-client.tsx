@@ -1,11 +1,13 @@
 "use client";
 
+import { useRef } from "react";
 import { motion } from "framer-motion";
 import { Moon, Sparkles } from "lucide-react";
 import type { CardData } from "@/lib/types";
 import { getTheme } from "@/lib/themes";
 import { t } from "@/lib/i18n";
 import { EidCard } from "@/components/eid-card";
+import { PdfDownloadButton } from "@/components/pdf-download-button";
 import { Footer } from "@/components/footer";
 
 interface CardViewClientProps {
@@ -13,6 +15,7 @@ interface CardViewClientProps {
 }
 
 export function CardViewClient({ data }: CardViewClientProps) {
+  const cardRef = useRef<HTMLDivElement>(null);
   const theme = getTheme(data.theme);
   const lang = data.lang || "bn";
   const p = theme.page;
@@ -88,7 +91,24 @@ export function CardViewClient({ data }: CardViewClientProps) {
           transition={{ delay: 0.3, duration: 0.7, ease: "easeOut" }}
           className="w-full max-w-lg"
         >
-          <EidCard data={data} animated />
+          {/* Plain div for PDF capture - motion/transform can break html2canvas */}
+          <div ref={cardRef} data-theme={data.theme || "emerald"}>
+            <EidCard data={data} animated />
+          </div>
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 1, duration: 0.5 }}
+          className="mt-6 w-full max-w-lg flex flex-col gap-3"
+        >
+          <PdfDownloadButton
+            cardRef={cardRef}
+            recipientName={data.recipientName}
+            lang={data.lang || "bn"}
+            variant="light"
+          />
         </motion.div>
 
         <motion.div

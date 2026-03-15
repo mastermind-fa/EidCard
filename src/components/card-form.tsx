@@ -2,13 +2,14 @@
 
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState, useCallback, useRef } from "react";
 import { Sparkles, Loader2, Shuffle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { ShareButton } from "@/components/share-button";
+import { PdfDownloadButton } from "@/components/pdf-download-button";
 import { EidCard } from "@/components/eid-card";
 import { ThemePicker } from "@/components/theme-picker";
 import { FontPicker } from "@/components/font-picker";
@@ -28,6 +29,7 @@ export function CardForm() {
   const [userEditedMessage, setUserEditedMessage] = useState(false);
   const [templateIndex, setTemplateIndex] = useState(0);
   const [lang, setLang] = useState<Language>("bn");
+  const previewCardRef = useRef<HTMLDivElement>(null);
 
   const form = useForm<CardFormData>({
     resolver: zodResolver(cardDataSchema),
@@ -184,7 +186,16 @@ export function CardForm() {
 
         <div className="pt-4">
           <h3 className="text-sm font-medium text-gray-500 mb-3 text-center">{t(lang, "preview")}</h3>
-          <EidCard data={previewData} animated={false} compact />
+          <div ref={previewCardRef} data-theme={previewData.theme || "emerald"}>
+            <EidCard data={previewData} animated={false} compact />
+          </div>
+          <div className="mt-3">
+            <PdfDownloadButton
+              cardRef={previewCardRef}
+              recipientName={watchedValues.recipientName}
+              lang={lang}
+            />
+          </div>
         </div>
 
         <Button onClick={resetForm} variant="ghost" className="w-full">

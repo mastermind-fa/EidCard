@@ -51,6 +51,9 @@ const translations = {
     copied: "Copied!",
     home: "Home",
     eidCard: "Eid Card",
+    downloadPdf: "Download PDF",
+    pdfDownloaded: "PDF downloaded!",
+    pdfFailed: "Download failed",
   },
   bn: {
     heroTagline: "ঈদ উল-ফিতর মোবারক",
@@ -96,6 +99,9 @@ const translations = {
     copied: "কপি হয়েছে!",
     home: "হোম",
     eidCard: "ঈদ কার্ড",
+    downloadPdf: "পিডিএফ ডাউনলোড",
+    pdfDownloaded: "পিডিএফ ডাউনলোড হয়েছে!",
+    pdfFailed: "ডাউনলোড ব্যর্থ",
   },
 } as const;
 
